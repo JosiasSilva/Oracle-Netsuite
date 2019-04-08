@@ -50,6 +50,7 @@ function saveRecord() {
     var deliveryDate = nlapiGetFieldValue('custpage_date');
     var returnLabelStatus = nlapiGetFieldValue('custpage_selectfield5');
     
+    
 
     var salesOrder = nlapiCreateRecord('salesorder');
     salesOrder.setFieldValue('entity', customerName);

@@ -6,17 +6,14 @@
         ID -----> customscript2629
  */
 
-
-
 function gettingStartedSuitelet(request, response) {
     var form = nlapiCreateForm("Suitelet");
 
-function check() {
     form.addButton('custpage_nextButton', 'Next', 'check();');
-    form.setScript("customscript2630");
-    // var html = form.addField('custpage_html', 'inlinehtml');
 
-    form.addButton('custpage_nextButton', 'Close', 'close()');
+    // var html = form.addField('custpage_html', 'inlinehtml');
+    form.addButton('custpage_nextButton', 'Close', 'closeWindow();');
+
     form.addTab("custpage_to_be_returned_tab", "To Be Returned");
     var field = form.addField('custpage_selectfield', 'select', 'select a item');
     field.addSelectOption('0', '', true);
@@ -28,7 +25,7 @@ function check() {
     field.addSelectOption('6', 'Upgrade', false);
     field.addSelectOption('7', 'Reset', false);
     field.addSelectOption('8', 'Size', false);
-
+    form.setScript("customscript2630");
     response.writePage(form);
 
 }

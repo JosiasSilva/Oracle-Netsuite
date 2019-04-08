@@ -81,7 +81,7 @@ function suiteletafterSublistItem(request, response) {
 
   // ---------------------------------------second tab------------------------------------------------------
   // form.addSubTab('custpage_sample_subtab1', 'Delivery/Shipping');
-  var group2 = form.addFieldGroup('custpage_sample_subtab1', 'Delivery/Shipping');
+  form.addFieldGroup('custpage_sample_subtab1', 'Delivery/Shipping');
 
   var mandatory7 = form.addField('custpage_date', 'date', 'DELIVERY DATE', null, 'custpage_sample_subtab1');
   mandatory7.setMandatory(true);
