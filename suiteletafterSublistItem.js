@@ -29,20 +29,21 @@ function suiteletafterSublistItem(request, response) {
   form.addField('custpage_field1', 'date', 'ACTUAL SHIP DATE', null, 'custpage_sample_subtab');
 
   var field = form.addField('custpage_selectfield', 'select', 'DROP OFF', null, 'custpage_sample_subtab');
-  field.addSelectOption('0', '', true);
-  field.addSelectOption('1', 'HOME', false);
-  field.addSelectOption('2', 'OFFICE', false);
-  field.addSelectOption('3', 'POST-OFFICE', false);
-  field.addSelectOption('4', 'HEAD-OFFICE', false);
+  field.addSelectOption('', '', true);
+  field.addSelectOption('-1', '- New -', true);
+  field.addSelectOption('1', 'Yes', false);
+  field.addSelectOption('2', 'No', false);
   field.setMandatory(true);
 
   var field2 = form.addField('custpage_selectfield1', 'select', 'PLACE OF SALE', null, 'custpage_sample_subtab');
   field2.addSelectOption('0', '', true);
-  field2.addSelectOption('1', 'AMAZON', false);
-  field2.addSelectOption('2', 'FLIPKART', false);
-  field2.addSelectOption('3', 'SNAPDEAL', false);
-  field2.addSelectOption('4', 'MYNTRA', false);
+  field2.addSelectOption('54', 'Not Bank Wire', false);
+  field2.addSelectOption('59', 'Phone', false);
+  field2.addSelectOption('3', 'Opportunity', false);
+  field2.addSelectOption('9', 'Phone : Bank Wire', false);
+  field2.addSelectOption('1', 'Website', false);
   field2.setMandatory(true);
+
 
   var field3 = form.addField('custpage_selectfield2', 'select', 'SALES REP', null, 'custpage_sample_subtab');
   field3.addSelectOption('0', '', true);
@@ -79,7 +80,7 @@ function suiteletafterSublistItem(request, response) {
   form.addField('custpage_field_textarea1', 'textarea', 'OR NOTES', null, 'custpage_sample_subtab');
 
 
-  // ---------------------------------------second tab------------------------------------------------------
+  // --------------------------------------- second tab ------------------------------------------------------
   // form.addSubTab('custpage_sample_subtab1', 'Delivery/Shipping');
   form.addFieldGroup('custpage_sample_subtab1', 'Delivery/Shipping');
 
@@ -142,7 +143,7 @@ function suiteletafterSublistItem(request, response) {
 
   form.addField('custpage_field15', 'text', 'STATUS OF INTERNATIONAL TAXES', null, 'custpage_sample_subtab1');
 
-  // ---------------------------------------------------------------------------****
+  // ------------------------------------- Sublist --------------------------------------****
 
   var sublist = form.addSubList('sublist', 'inlineeditor', null, 'custpage_sample_subtab1');
   sublist.addField('sublist1', 'text', 'SHIPPING TO BE');
@@ -159,3 +160,4 @@ function suiteletafterSublistItem(request, response) {
 
   response.writePage(form);
 }
+

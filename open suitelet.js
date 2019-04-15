@@ -50,7 +50,6 @@ function saveRecord() {
     var deliveryDate = nlapiGetFieldValue('custpage_date');
     var returnLabelStatus = nlapiGetFieldValue('custpage_selectfield5');
     
-    
 
     var salesOrder = nlapiCreateRecord('salesorder');
     salesOrder.setFieldValue('entity', customerName);
@@ -65,11 +64,9 @@ function saveRecord() {
     salesOrder.setFieldValue('custbody154', insurance);
     salesOrder.setFieldValue('custbody_yelp_elite_status', contactAfterInspection);
     salesOrder.setFieldValue('custbody308', returnLabelStatus);
-   // salesOrder.setFieldValue('custbody308', returnLabelStatus);
-    salesOrder.setLineItemValue("item",'item','1924056',1);
-    salesOrder.commitLineItem('item')
-    
+    var item= nlapiGetLineItemValue('sublist','sublist2',1);
 
+    salesOrder.setLineItemValue("item",'item',1,item);
 
     var internalId = nlapiSubmitRecord(salesOrder);
     alert(internalId);
