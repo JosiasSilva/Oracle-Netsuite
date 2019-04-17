@@ -29,32 +29,43 @@ function beforeLoad(type, form) {
 				if (second == "Round" || "Princess" || "Cushion" || "Oval" || "Emerald" || "Asscher" || "Radiant" || "Pear" || "Marquise" || "Heart" || "Baguette ") {
 					var v = value.split('\n');
 
-					var Gemstone = v[0];
-					var Shape = v[1];
-					var Setting_type = v[4];
-					var Color = v[5];
-					var clarity = v[6];
+					var Gemstone_value = v[0].split(':')[1];
+					var Shape_value = v[1].split(':')[1];
+					var Setting_type_value = v[4].split(':')[1];
+					var Color_value = v[5].split(':')[1];
+					var clarity_value = v[6].split(':')[1];
 
-					var string = '<table><th><td>Gemstone</td><td>Shape</td><td>Setting_type</td><td>Color</td><td>clarity</td></th><tr><td>';
-					string += Gemstone + '</td><td>';
-					string += Shape + "</td><td>";
-					string += Setting_type + "</td></td>";
-					string += Color + "</td></td>";
-					string += clarity + "</td></td>";
-					string += '</tr></table>';
+					var string = "<table style='width:100%'> \
+					<tr>\
+					  <th>Fields</th>\
+					  <th colspan='1'>Values</th>\
+					</tr>\
+					<tr>\
+					  <td>Gemstone</td>\
+					  <td> "+ Gemstone_value +"</td>\
+					</tr>\
+					<tr>\
+					  <td>Shape</td>\
+					  <td>"+ Shape_value +"</td>\
+					</tr>\
+					<tr>\
+					  <td>Setting_type</td>\
+					  <td>"+ Setting_type_value +"</td>\
+					</tr>\
+					<tr>\
+					  <td>Color</td>\
+					  <td>"+ Color_value +"</td>\
+					</tr>\
+					  <tr>\
+					  <td>clarity</td>\
+					  <td>"+ clarity_value +"</td>\
+					</tr>\
+					</table>";
+					
 					nlapiLogExecution("debug", 'sending mail', 'mail sent ' + string);
 					nlapiSendEmail('25963357', 'avinash.singh@inoday.com', 'test', "hi this is test mail", null, null, { transaction: 24015026 }, null);
-
 				}
-
 			}
-
-			//      var item_pattern = /^be.*/im;
-			//    var item_result = item_pattern.test(SO_Item_No);
-			//  if (item_result) {
-			//  Parent_Item.push(SO_Item_No.split(':')[0]);
-			// }
 		}
-
 	}
 }
