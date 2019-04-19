@@ -1,3 +1,12 @@
+/**  
+ *      custom id = (id=2638)
+ * 
+ *      TYPE ---> User Event
+        NAME ---> dummy_field
+        ID -----> customscript_dummy_field
+ */
+
+
 // function beforeLoad(type, form) {
 //     if (type == 'view' || type == 'edit') {
 
@@ -42,7 +51,7 @@ function beforeSubmit(type, form) {
 
 /**  optimized code but having condition that date should be sorted in ascending order */
 
-var holiday = ["4/18/2019", "4/19/2019", "4/20/2019", "4/22/2019", "4/23/2019", "4/24/2019", "4/25/2019", "4/26/2019"];
+var holiday = ["4/18/2019", "4/19/2019", "4/20/2019", "4/25/2019", "4/26/2019"];
 var startDate = new Date();
 var endDate = new Date(startDate.setDate(startDate.getDate() + 1));
 

@@ -6,8 +6,6 @@
         ID -----> customscript_fetchshape
  */
 
-
-
 function beforeLoad(type, form) {
 	if (type == 'view' || type == 'edit') {
 		var SO_ID = nlapiGetRecordId();
@@ -26,7 +24,7 @@ function beforeLoad(type, form) {
 				var value = nlapiLookupField('inventoryitem', parent, 'custitem101');
 				var first = value.split('\n')[1];
 				var second = first.split(':')[1];
-				if (second == "Round" || "Princess" || "Cushion" || "Oval" || "Emerald" || "Asscher" || "Radiant" || "Pear" || "Marquise" || "Heart" || "Baguette ") {
+				if (second == "Round" || "Princess" || "Cushion" || "Oval" || "Emerald" || "Asscher" || "Radiant" || "Pear" || "Marquise" || "Heart" || "Baguette") {
 					var v = value.split('\n');
 
 					var Gemstone_value = v[0].split(':')[1];
