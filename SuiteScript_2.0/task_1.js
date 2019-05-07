@@ -10,7 +10,6 @@ define(['N/record', 'N/log'],
 
                 var currentRecord = context.newRecord;
 
-
                 // var objRecord = record.load({
                 //      type: record.Type.SALES_ORDER,
                 //      id:currentRecord.id,
@@ -20,19 +19,22 @@ define(['N/record', 'N/log'],
                 // log.error({title:'executed', details:'executed'});
                 var form = context.form;
                 var haveCustomKey;
+                form.clientScriptModulePath = 'SuiteScripts/common.js';
+                
                 var count = currentRecord.getLineCount({
                     sublistId: 'item'
                 });
-                for ( var i = 0; i < count; i++ ) {
+                for (var i = 0; i < count; i++) {
                     haveCustomKey = currentRecord.getSublistText({
                         sublistId: 'item',
                         fieldId: 'item',
                         line: i
                     });
-                    if (( haveCustomKey.indexOf('custom') == -1 )) {
+                    if ((haveCustomKey.indexOf('custom') == -1)) {
                         form.addButton({
                             id: 'custpage_btnavi',
-                            label: 'Custom BUTTON'
+                            label: 'Custom BUTTON',
+                            functionName: 'openSuite'
                         });
                         break;
                         //  log.error({title:'executed', details:'executed'});
