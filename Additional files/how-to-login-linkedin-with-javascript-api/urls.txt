@@ -1,0 +1,29 @@
+https://www.knowband.com/blog/user-manual/get-linkedin-api-key-app-secret-key-details/
+
+https://www.developer.com/lang/jscript/using-linkedin-javascript-api-for-user-authentication-and-profile-retrieval.html
+
+https://makitweb.com/how-to-login-linkedin-with-javascript-api/
+
+function onLinkedInAuth()
+{
+IN.API.Profile("me")
+.fields("firstName", "lastName", "industry", "location:(name)", "picture-url", "headline", "summary", "num-connections", "public-profile-url", "distance", "positions", "email-address", "educations", "date-of-birth")
+.result(displayProfiles)
+.error(displayProfilesErrors);
+}
+
+
+https://www.codexworld.com/login-with-linkedin-using-javascript-sdk/
+
+https://stackoverflow.com/questions/29428157/how-to-login-with-linkedin-using-javascript-and-display-profile-information
+
+https://www.c-sharpcorner.com/blogs/fetch-linkedin-data-using-javascript
+
+https://stackoverflow.com/questions/8593144/how-to-retrieve-all-possible-information-about-a-linkedin-account-api-using-c
+
+
+
+
+nodejs
+
+https://www.sitepoint.com/user-authentication-mean-stack/
