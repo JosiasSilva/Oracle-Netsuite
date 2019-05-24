@@ -1,0 +1,13 @@
+function example(a, b) {
+	return a+b;
+}
+
+alert(example(10,12));
+
+for (let i = 0; i < 10; i++) {
+
+    if (i % 2) {
+      alert( i );
+    }
+  
+  }

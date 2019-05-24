@@ -1,0 +1,45 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v7="http://fedex.com/ws/locs/v7">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v7:SearchLocationsRequest>
+		  <v7:WebAuthenticationDetail>
+			<v7:UserCredential>
+			  <v7:Key>3AEDIaHZdh8iz0kz</v7:Key>
+			  <v7:Password>pwYWcMakqktbbD5xcsw67pinm</v7:Password>
+			</v7:UserCredential>
+		  </v7:WebAuthenticationDetail>
+		  
+		  <v7:ClientDetail>
+			<v7:AccountNumber>336188067</v7:AccountNumber>
+			<v7:MeterNumber>109944986</v7:MeterNumber>
+		  </v7:ClientDetail>
+		  
+		  <v7:TransactionDetail>
+			<v7:CustomerTransactionId>LocationLookup</v7:CustomerTransactionId>
+		  </v7:TransactionDetail>
+		  
+		  <v7:Version>
+			<v7:ServiceId>locs</v7:ServiceId>
+			<v7:Major>7</v7:Major>
+			<v7:Intermediate>0</v7:Intermediate>
+			<v7:Minor>0</v7:Minor>
+		  </v7:Version>
+		  
+		  <v7:LocationsSearchCriterion>ADDRESS</v7:LocationsSearchCriterion>
+		  
+		  <v7:Address>
+			<v7:StreetLines>{{address1}}</v7:StreetLines>
+			<v7:StreetLines>{{address2}}</v7:StreetLines>
+			<v7:City>{{city}}</v7:City>
+			<v7:StateOrProvinceCode>{{state}}</v7:StateOrProvinceCode>
+			<v7:PostalCode>{{zipcode}}</v7:PostalCode>
+			<v7:CountryCode>{{country}}</v7:CountryCode>
+		  </v7:Address>
+		  
+		  <v7:MultipleMatchesAction>RETURN_ALL</v7:MultipleMatchesAction>
+		  
+		</v7:SearchLocationsRequest>
+	</soapenv:Body>
+</soapenv:Envelope>
+
+

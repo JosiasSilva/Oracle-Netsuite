@@ -1,0 +1,26 @@
+/*
+ * Script Author :  Sanjay Singh (sanjay.singh@inoday.com)
+ * Author Desig. :  Netsuite Developer, Inoday Consultancy Pvt. Ltd.
+ * Script Type   :  User Event Script
+ * Script Name   :  Replying to emails as CSS
+ * Script File   :  replymail_Button.js  (New Version)
+ * Updated Date  :  May 23, 2018
+ */
+
+function set_reply_Mail(type,form)
+{
+ var fld=form.addField('custpage_inline','inlinehtml');
+  fld.setDefaultValue("<script>"+str+"</script>");
+	debugger;
+  form.addButton("custpage_sendmail","Reply as CSS","openCustomCssEmailSuiteletPage()");
+}
+
+var str='\
+function openCustomCssEmailSuiteletPage()\
+{var messageid = nlapiGetRecordId();\
+ var custpage_recordid =opener.nlapiGetRecordId();\
+var  custpage_recordtype= opener.nlapiGetRecordType();\
+  if(messageid){\
+  window.open("/app/site/hosting/scriptlet.nl?script=2217&deploy=1&msgId="+messageid+"&custpage_recordid="+custpage_recordid+"&custpage_recordtype="+custpage_recordtype,\"Reply As CSS\",\"width=700,height=500\");\
+  }\
+}';

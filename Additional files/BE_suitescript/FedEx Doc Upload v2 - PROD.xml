@@ -1,0 +1,32 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:q0="http://fedex.com/ws/uploaddocument/v8">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<q0:UploadImagesRequest>
+		  <q0:WebAuthenticationDetail>
+			<q0:UserCredential>
+			  <q0:Key>{{key}}</q0:Key>
+			  <q0:Password>{{password}}</q0:Password>
+			</q0:UserCredential>
+		  </q0:WebAuthenticationDetail>
+		  <q0:ClientDetail>
+			<q0:AccountNumber>{{account}}</q0:AccountNumber>
+			<q0:MeterNumber>{{meter}}</q0:MeterNumber>
+		  </q0:ClientDetail>
+		  <q0:TransactionDetail>
+			<q0:CustomerTransactionId>Upload Images Example</q0:CustomerTransactionId>
+		  </q0:TransactionDetail>
+		  <q0:Version>
+			<q0:ServiceId>cdus</q0:ServiceId>
+			<q0:Major>8</q0:Major>
+			<q0:Intermediate>0</q0:Intermediate>
+			<q0:Minor>0</q0:Minor>
+		  </q0:Version>
+		  <q0:Images>
+			<q0:Id>{{image_id}}</q0:Id>
+			<q0:Image>{{file}}</q0:Image>
+		  </q0:Images>
+		</q0:UploadImagesRequest>
+	</soapenv:Body>
+</soapenv:Envelope>
+
+

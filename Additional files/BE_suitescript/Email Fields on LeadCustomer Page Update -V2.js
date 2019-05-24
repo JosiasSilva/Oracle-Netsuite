@@ -1,0 +1,226 @@
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
+function Update_Email_Update(get_Message_id)
+{
+  try
+  {
+    var message_record=nlapiLoadRecord('message',get_Message_id); //
+    var date_time_last_email=message_record.getFieldValue('lastmodifieddate');
+    if(date_time_last_email.search(' am')>=0)
+    {
+      date_time_last_email=date_time_last_email.substring(0,date_time_last_email.search(' am'))+':00 am';
+    }
+    else
+    {
+      date_time_last_email=date_time_last_email.substring(0,date_time_last_email.search(' pm'))+':00 pm';
+    }
+
+    var entity_id=message_record.getFieldValue('entity');
+    if(entity_id)
+    {
+      var search_entity=nlapiSearchRecord('entity',null,new nlobjSearchFilter('internalid',null,'anyof',entity_id),new nlobjSearchColumn('custentity_date_time_last_email'));
+      if(search_entity)
+      {
+        var custentity_date_time_last_email=search_entity[0].getValue('custentity_date_time_last_email');
+        if(custentity_date_time_last_email!=date_time_last_email)
+        {
+
+          var get_record_type=search_entity[0].getRecordType();
+          if(get_record_type=='customer' || get_record_type=='lead' || get_record_type=='prospect')
+          {
+            var last_email_recipient=message_record.getFieldValue('recipientemail');if(!last_email_recipient){last_email_recipient="";}
+            var last_email_from_customer_boady=message_record.getFieldValue('message');if(!last_email_from_customer_boady){last_email_from_customer_boady="";}
+            var subject=message_record.getFieldValue('subject');if(!subject){subject="";}
+            var recipient=message_record.getFieldValue('recipient');if(!recipient){recipient="";} // if recipient value get so this is BE user
+            var author=message_record.getFieldValue('author');if(!author){author="";}
+            var authoremail=message_record.getFieldValue('authoremail');if(!authoremail){authoremail="";}
+
+            last_email_recipient=last_email_recipient.replaceAll(',',',\n');
+            subject=subject.toLowerCase();            
+            if(last_email_from_customer_boady)
+            {
+              var index_next_boady= last_email_from_customer_boady.indexOf('<strong>From:');
+              if(index_next_boady!=-1)
+              {
+                last_email_from_customer_boady=last_email_from_customer_boady.substring(0,index_next_boady);
+                if(last_email_from_customer_boady)
+                {
+                  last_email_from_customer_boady=last_email_from_customer_boady.replaceAll('\r\n<hr />','');
+                }
+              }
+              var first_index=last_email_from_customer_boady.indexOf('<BODY');
+              if(first_index==-1){first_index=last_email_from_customer_boady.indexOf('<body');}
+              var last_index=last_email_from_customer_boady.indexOf('</BODY');
+              if(last_index==-1){last_index=last_email_from_customer_boady.indexOf('</body');}
+              if(first_index!=-1 && last_index!=-1)
+              {
+                last_email_from_customer_boady=last_email_from_customer_boady.substring(first_index,last_index);
+                var close_body_index=last_email_from_customer_boady.indexOf('>');
+                if(close_body_index>=0)
+                {
+                  first_index=close_body_index+1;
+                }
+                last_email_from_customer_boady=last_email_from_customer_boady.substring(first_index);
+              }
+            }
+            var customer_reply_status='';
+            var email_status='';
+            if(last_email_recipient.indexOf('@brilliantearth.com')>=0)
+            {
+              recipient='@brilliantearth.com';
+            }
+            else if(authoremail.indexOf('@brilliantearth.com')>=0)
+            {
+              author='@brilliantearth.com';
+            }
+            if(author==entity_id)
+            {
+              author='';
+            }
+            else if(recipient==entity_id)
+            {
+              recipient='';
+            }
+            if(recipient && !author)
+            {
+              customer_reply_status="Not replied";
+            }
+            else if(author && !recipient && subject.indexOf('re:')>=0)
+            {
+              customer_reply_status="Replied";
+            }  
+
+            if(recipient && !author)
+            {
+              email_status="1";
+            }
+            nlapiSubmitField ( get_record_type , entity_id,
+                              ['custentity_date_time_last_email','custentity_last_email_recipient','custentity_last_email_from_customer','custentity_customer_reply_status','custentity_email_status'] ,
+                              [date_time_last_email,last_email_recipient,last_email_from_customer_boady,customer_reply_status,email_status]) ;
+            // Added by Sandeep for task NS-1036
+            addEmailHyperlinkToLeadAndCustomer(get_record_type,entity_id);
+          }
+        }
+      }
+    }
+  }
+  catch(er)
+  {
+    nlapiLogExecution ( 'debug' , 'er' ,er.message ); 
+  }
+}
+function addEmailHyperlinkToLeadAndCustomer(recordType,recordId) {
+  nlapiLogExecution('debug', 'email links', nlapiGetRecordType());
+  //  var recordType = nlapiGetRecordType();
+  // if (recordType == 'message')
+  //    return;
+  // var recordId = nlapiGetRecordId();
+  var last_email_recipient = nlapiLookupField(recordType, recordId, 'custentity_last_email_recipient');
+  var isInActive = nlapiLookupField(recordType, recordId, 'isinactive');
+  var emailForNewLead = nlapiLookupField(recordType, recordId, 'email');
+  if (isInActive == 'T') {
+    var record = nlapiCreateRecord('lead');
+    record.setFieldValue('email', emailForNewLead);
+    nlapiSubmitRecord(record, false, true);
+    return;
+  }
+  if (last_email_recipient) {
+    last_email_recipient = last_email_recipient.split(',');
+
+  }
+  getHtmlData(last_email_recipient, recordId);
+}
+
+function getHtmlData(email_recipient_array, customer_id) {
+  var brilliantearth_id = [];
+  var other_email_id = [];
+  for (var i = 0; i < email_recipient_array.length; i++) {
+    if (email_recipient_array[i].search('brilliantearth.com') >= 0) {
+      brilliantearth_id.push(email_recipient_array[i].trim());
+    } else {
+      other_email_id.push(email_recipient_array[i].trim());
+    }
+  }
+
+  var obj_employee_id = [];
+  var obj_customer_id = [];
+  var obj_lead = [];
+  var obj_customer = [];
+  if (brilliantearth_id) {
+    for (var b = 0; b < brilliantearth_id.length; b++) {
+      var listEmployeeBE = searchRecordFilterEmployee('employee', brilliantearth_id[b]);
+      if (listEmployeeBE) {
+        for (var v = 0; v < listEmployeeBE.length; v++) {
+          obj_employee_id.push(listEmployeeBE[v].id);
+        }
+      }
+    }
+  }
+
+  if (other_email_id.length != 0) {
+
+    for (var b = 0; b < other_email_id.length; b++) {
+      var listEmployeeOther = searchRecordFilterEmployee('employee', other_email_id[b]);
+      if (listEmployeeOther) {
+        for (var v = 0; v < listEmployeeOther.length; v++) {
+          obj_employee_id.push(listEmployeeOther[v].id);
+        }
+      }
+    }
+
+
+    for (var b = 0; b < other_email_id.length; b++) {
+      var listCustomerOther = searchRecordFilter('customer', other_email_id[b]);
+      if (listCustomerOther) {
+        for (var c = 0; c < listCustomerOther.length; c++) {
+          if (listCustomerOther[c].getValue('stage') == "CUSTOMER") {
+            obj_customer.push(listCustomerOther[c].id);
+          } else {
+            obj_lead.push(listCustomerOther[c].id);
+          }
+
+        }
+      }
+      if (obj_customer.length != 0) {
+        obj_customer_id.push(obj_customer[0]);
+      } else if (obj_lead.length != 0) {
+        obj_customer_id.push(obj_lead[0])
+      }
+    }
+  }
+
+  nlapiLogExecution('debug', 'about to finish', 'finished');
+  nlapiLogExecution('debug', 'about to finish', customer_id);
+  nlapiLogExecution('debug', 'customer', JSON.stringify(obj_customer_id));
+  nlapiLogExecution('debug', 'employees', JSON.stringify(obj_employee_id));
+  try {
+    nlapiSubmitField('customer', customer_id, ["custentity_lastemailrecipientcustomers", "custentity_lastemailrecipientemployee"], [obj_customer_id, obj_employee_id]);
+  } catch (ex) {
+    nlapiLogExecution('debug', 'exception', ex.message);
+  }
+
+
+
+}
+
+function searchRecordFilter(record_type, email_obj) {
+  var filter = [];
+  var internalid = new nlobjSearchColumn('internalid');
+  var stage = new nlobjSearchColumn('stage');
+  var lastmodified = new nlobjSearchColumn('lastmodifieddate').setSort(true);
+  filter.push(new nlobjSearchFilter('isinactive', null, 'is', 'F'));
+  filter.push(new nlobjSearchFilter('email', null, 'is', email_obj));
+  var columns = [lastmodified, stage, internalid];
+  var search_data = nlapiSearchRecord(record_type, null, filter, columns);
+  return search_data;
+}
+
+function searchRecordFilterEmployee(record_type, email_obj) {
+  var filter = [];
+  filter.push(new nlobjSearchFilter('isinactive', null, 'is', 'F'));
+  filter.push(new nlobjSearchFilter('email', null, 'is', email_obj));
+  var search_data = nlapiSearchRecord(record_type, null, filter);
+  return search_data;
+}

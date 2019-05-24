@@ -1,0 +1,37 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v19="http://fedex.com/ws/ship/v19">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v19:DeleteShipmentRequest>
+		
+			<v19:WebAuthenticationDetail>
+				<v19:UserCredential>
+					<v19:Key>{{key}}</v19:Key>
+					<v19:Password>{{password}}</v19:Password>
+				</v19:UserCredential>
+			</v19:WebAuthenticationDetail>
+			
+			<v19:ClientDetail>
+				<v19:AccountNumber>{{accountnumber}}</v19:AccountNumber>
+				<v19:MeterNumber>{{meternumber}}</v19:MeterNumber>
+			</v19:ClientDetail>
+			
+			<v19:TransactionDetail>
+				<v19:CustomerTransactionId>DeleteShip_Basic</v19:CustomerTransactionId>
+			</v19:TransactionDetail>
+			
+			<v19:Version>
+				<v19:ServiceId>ship</v19:ServiceId>
+				<v19:Major>19</v19:Major>
+				<v19:Intermediate>0</v19:Intermediate>
+				<v19:Minor>0</v19:Minor>
+			</v19:Version>
+			
+			<v19:TrackingId>
+				<v19:TrackingIdType>{{trackingType}}</v19:TrackingIdType>
+				<v19:TrackingNumber>{{trackingNumber}}</v19:TrackingNumber>
+			</v19:TrackingId>
+			
+			<v19:DeletionControl>DELETE_ALL_PACKAGES</v19:DeletionControl>
+		</v19:DeleteShipmentRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

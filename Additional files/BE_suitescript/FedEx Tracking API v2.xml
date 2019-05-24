@@ -1,0 +1,37 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v15="http://fedex.com/ws/track/v15">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v15:TrackRequest>
+			<v15:WebAuthenticationDetail>
+				<v15:UserCredential>
+					<v15:Key>3AEDIaHZdh8iz0kz</v15:Key>
+					<v15:Password>pwYWcMakqktbbD5xcsw67pinm</v15:Password>
+				</v15:UserCredential>
+			</v15:WebAuthenticationDetail>
+			
+			<v15:ClientDetail>
+				<v15:AccountNumber>336188067</v15:AccountNumber>
+				<v15:MeterNumber>109944986</v15:MeterNumber>
+			</v15:ClientDetail>
+			
+			<v15:TransactionDetail>
+				<v15:CustomerTransactionId>TrackByNumber</v15:CustomerTransactionId>
+			</v15:TransactionDetail>
+			
+			<v15:Version>
+				<v15:ServiceId>trck</v15:ServiceId>
+				<v15:Major>15</v15:Major>
+				<v15:Intermediate>0</v15:Intermediate>
+				<v15:Minor>0</v15:Minor>
+			</v15:Version>
+			
+			<v15:SelectionDetails>
+				<v15:PackageIdentifier>
+					<v15:Type>TRACKING_NUMBER_OR_DOORTAG</v15:Type>
+					<v15:Value>{{trackingnumber}}</v15:Value>
+				</v15:PackageIdentifier>
+			</v15:SelectionDetails>
+			
+		</v15:TrackRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

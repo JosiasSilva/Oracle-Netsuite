@@ -1,0 +1,50 @@
+/*Script Author 						: 	SAURABH MISHRA  (saurabh.mishra@inoday.com)
+ * Author Desig. 						: 	Jr. Developer, Inoday Consultancy Pvt. Ltd.
+ * Script Type   						: 	SuiteletScript/RESTLET
+ * Created Date  						: 	APRIL 05, 2018
+ * Last Modified Date 					:  	APRIL 05, 2018
+ * Comments                 			: 	THIS RESTLET SENDS DATA REGARDING EMAIL TEMPLATE TO CUSTOM EMAILL CSS SUITELET
+ * Production URL			            :	/app/common/scripting/script.nl?id=2216
+ * Sandbox URL			                :	/app/common/scripting/script.nl?id=2615
+ */
+
+function getSubjectAndBody(datain)
+{
+  nlapiLogExecution('debug',"I am here");
+  var recordtype=datain.recordtype;
+  var recordId=datain.recordId;
+  var template=datain.templateId;
+  var transactionOrEntity=datain.transactionOrEntity;
+  var getrecord=nlapiLoadRecord(recordtype,recordId);
+  var emailTemp = nlapiLoadRecord('emailtemplate',template);
+  var  subject = emailTemp.getFieldValue('subject')
+  var  body = emailTemp.getFieldValue('content');
+  var renderer = nlapiCreateTemplateRenderer();
+  if(transactionOrEntity=="transaction")
+  {
+    renderer.addRecord('customer', nlapiLoadRecord('customer',getrecord.getFieldValue('entity')) );
+    if(template=='368' && recordtype=='salesorder')
+      {
+        renderer.addRecord('transaction', nlapiLoadRecord('salesorder',recordId) );
+      }
+  }
+  else
+  {
+    renderer.addRecord('customer', getrecord );
+    if(template=='368' && recordtype=='salesorder')
+      {
+        renderer.addRecord('transaction', nlapiLoadRecord('salesorder',recordId) );
+      }
+  }
+  renderer.setTemplate(subject);
+  var renderSubj = renderer.renderToString();
+  renderer.setTemplate(body);
+  var renderedbody = renderer.renderToString();
+  var object={};
+  object['subject']=renderSubj;
+  object['body']=renderedbody;
+  return JSON.stringify(object);
+}
+
+
+

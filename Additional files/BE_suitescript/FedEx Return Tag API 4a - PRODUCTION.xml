@@ -1,0 +1,116 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v17="http://fedex.com/ws/ship/v17">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v17:ProcessShipmentRequest>
+		
+			<v17:WebAuthenticationDetail>
+				<v17:UserCredential>
+					<v17:Key>3AEDIaHZdh8iz0kz</v17:Key>
+					<v17:Password>pwYWcMakqktbbD5xcsw67pinm</v17:Password>
+				</v17:UserCredential>
+			</v17:WebAuthenticationDetail>
+			
+			<v17:ClientDetail>
+				<v17:AccountNumber>336188067</v17:AccountNumber>
+				<v17:MeterNumber>109944986</v17:MeterNumber>
+			</v17:ClientDetail>
+			
+			<v17:TransactionDetail>
+				<v17:CustomerTransactionId>ProcessShip_Basic</v17:CustomerTransactionId>
+			</v17:TransactionDetail>
+			
+			<v17:Version>
+				<v17:ServiceId>ship</v17:ServiceId>
+				<v17:Major>17</v17:Major>
+				<v17:Intermediate>0</v17:Intermediate>
+				<v17:Minor>0</v17:Minor>
+			</v17:Version>
+			
+			<v17:RequestedShipment>
+			
+				<v17:ShipTimestamp>{{ship_timestamp}}</v17:ShipTimestamp>
+				<v17:DropoffType>REGULAR_PICKUP</v17:DropoffType>
+				<v17:ServiceType>{{service_type}}</v17:ServiceType>
+				<v17:PackagingType>YOUR_PACKAGING</v17:PackagingType>
+					
+				<v17:Shipper>
+					<v17:Contact>
+						<v17:CompanyName>EMB</v17:CompanyName>
+						<v17:PhoneNumber>4153668036</v17:PhoneNumber>
+					</v17:Contact>
+					<v17:Address>
+						<v17:StreetLines>Floor 9</v17:StreetLines>
+						<v17:StreetLines>26 O'Farrell St.</v17:StreetLines>
+						<v17:City>San Francisco</v17:City>
+						<v17:StateOrProvinceCode>CA</v17:StateOrProvinceCode>
+						<v17:PostalCode>94108</v17:PostalCode>
+						<v17:CountryCode>US</v17:CountryCode>
+					</v17:Address>
+				</v17:Shipper>
+					
+				<v17:Recipient>
+					<v17:Contact>
+						<v17:CompanyName>{{ship_to_addressee}}</v17:CompanyName>
+						<v17:PhoneNumber>{{ship_to_phone}}</v17:PhoneNumber>
+					</v17:Contact>
+					<v17:Address>
+						<v17:StreetLines>{{ship_to_address_1}}</v17:StreetLines>
+						<v17:StreetLines>{{ship_to_address_2}}</v17:StreetLines>
+						<v17:City>{{ship_to_city}}</v17:City>
+						<v17:StateOrProvinceCode>{{ship_to_state}}</v17:StateOrProvinceCode>
+						<v17:PostalCode>{{ship_to_zip}}</v17:PostalCode>
+						<v17:CountryCode>{{ship_to_country}}</v17:CountryCode>
+					</v17:Address>
+				</v17:Recipient>
+					
+				<v17:ShippingChargesPayment>
+					<v17:PaymentType>RECIPIENT</v17:PaymentType>
+					<v17:Payor>
+						<v17:ResponsibleParty>
+							<v17:AccountNumber>336188067</v17:AccountNumber>
+							<v17:Contact/>
+						</v17:ResponsibleParty>
+					</v17:Payor>
+				</v17:ShippingChargesPayment>
+					
+				<v17:LabelSpecification>
+					<v17:LabelFormatType>COMMON2D</v17:LabelFormatType>
+					<v17:ImageType>PDF</v17:ImageType>
+					<v17:LabelStockType>PAPER_4X6</v17:LabelStockType>
+				</v17:LabelSpecification>
+					
+				<v17:PackageCount>1</v17:PackageCount>
+				
+				<v17:RequestedPackageLineItems>
+					<v17:SequenceNumber>1</v17:SequenceNumber>
+					<v17:InsuredValue>
+						<v17:Currency>USD</v17:Currency>
+						<v17:Amount>{{insurance_value}}</v17:Amount>
+					</v17:InsuredValue>
+					<v17:Weight>
+						<v17:Units>LB</v17:Units>
+						<v17:Value>2</v17:Value>
+					</v17:Weight>
+					<v17:CustomerReferences>
+						<v17:CustomerReferenceType>CUSTOMER_REFERENCE</v17:CustomerReferenceType>
+						<v17:Value>{{insurance_label}}</v17:Value>
+					</v17:CustomerReferences>
+					<v17:CustomerReferences>
+						<v17:CustomerReferenceType>INVOICE_NUMBER</v17:CustomerReferenceType>
+						<v17:Value>{{tranid}}</v17:Value>
+					</v17:CustomerReferences>
+					
+					{{#if dsr}}
+					<v17:SpecialServicesRequested>
+						<v17:SpecialServiceTypes>SIGNATURE_OPTION</v17:SpecialServiceTypes>
+						<v17:SignatureOptionDetail>
+							<v17:OptionType>DIRECT</v17:OptionType>
+						</v17:SignatureOptionDetail>
+					</v17:SpecialServicesRequested>
+					{{/if}}
+				</v17:RequestedPackageLineItems>
+				
+			</v17:RequestedShipment>
+		</v17:ProcessShipmentRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

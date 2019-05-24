@@ -1,0 +1,43 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v19="http://fedex.com/ws/addressvalidation/v4">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v19:AddressValidationRequest>
+		
+			<v19:WebAuthenticationDetail>
+				<v19:UserCredential>
+					<v19:Key>3AEDIaHZdh8iz0kz</v19:Key>
+					<v19:Password>pwYWcMakqktbbD5xcsw67pinm</v19:Password>
+				</v19:UserCredential>
+			</v19:WebAuthenticationDetail>
+			
+			<v19:ClientDetail>
+				<v19:AccountNumber>336188067</v19:AccountNumber>
+				<v19:MeterNumber>109944986</v19:MeterNumber>
+			</v19:ClientDetail>
+			
+			<v19:TransactionDetail>
+				<v19:CustomerTransactionId>Address Validation</v19:CustomerTransactionId>
+			</v19:TransactionDetail>
+			
+			<v19:Version>
+				<v19:ServiceId>aval</v19:ServiceId>
+				<v19:Major>4</v19:Major>
+				<v19:Intermediate>0</v19:Intermediate>
+				<v19:Minor>0</v19:Minor>
+			</v19:Version>
+			
+			<v19:AddressesToValidate>
+				<v19:Address>
+					<v19:StreetLines>{{address1}}</v19:StreetLines>
+					<v19:StreetLines>{{address2}}</v19:StreetLines>
+					<v19:City>{{city}}</v19:City>
+					<v19:StateOrProvinceCode>{{state}}</v19:StateOrProvinceCode>
+					<v19:PostalCode>{{zip}}</v19:PostalCode>
+					<v19:CountryCode>{{country}}</v19:CountryCode>
+				</v19:Address>
+				
+			</v19:AddressesToValidate>
+			
+		</v19:AddressValidationRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

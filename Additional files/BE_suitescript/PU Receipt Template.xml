@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+<link name="verdana" type="font" subtype="opentype" src="${nsfont.verdana}" src-bold="${nsfont.verdana_bold}" bytes="2"></link>
+<link name="brandon" type="font" subtype="opentype" src="https://www.brilliantearth.com/media/style/bearth/fonts/Brandon_reg.otf"></link>
+<link name='freightDispPro' type='font' subtype='opentype' src='https://www.brilliantearth.com/media/style/bearth/fonts/FreightDispPro_book.otf'></link>
+<link name='freightDispSB' type='font' subtype='opentype' src='https://www.brilliantearth.com/media/style/bearth/fonts/FreightDispPro_semibold.otf'></link>
+<link name='brandonMed' type='font' subtype='opentype' src='https://www.brilliantearth.com/media/style/bearth/fonts/Brandon_med.otf'></link>
+<link name='brandonBold' type='font' subtype='opentype' src='https://www.brilliantearth.com/media/style/bearth/fonts/Brandon_bld.otf'></link>
+<macrolist>
+<macro id="nlheader">
+	<div style="text-align: center;" align="center">
+		<img src="http://image.brilliantearth.com/media/images/logo/BE_logo_475x150.jpg" dpi="200" text-align="center"/>
+	</div>
+</macro>
+<macro id="nlfooter">
+	<hr background-color="#000000" width="7.0in"/>
+
+	<table align="right" cellmargin="0" cellpadding="15" margin-top="0.15in">
+		<tr>
+		<td align="right" class="freightDispPro pt11">Please confirm these item(s) have been picked up by signing below:</td>
+		</tr>
+    	<tr>
+		<td align="right" class="freightDispPro pt11">Signature: {{t:s;r:y;o:"signer";w:150;h:20;}}</td> 
+		</tr>
+	</table>
+</macro>
+</macrolist>
+<style type="text/css">
+.title{
+	text-transform: uppercase;
+	font-size: 10pt;
+	line-height: 14pt;
+	font-family: brandon;
+	color: #000;
+}
+.brandonGrotesque {font-family: brandon;}
+.brandonGrotesqueMed {font-family:brandonMed;}
+.brandonGrotesqueBold {font-family:brandonBold;}
+.freightDispProSB {font-family:freightDispSB;}
+.freightDispPro {font-family:freightDispPro;}
+.pt9 {font-size:9pt; line-height: 11pt;}
+.pt10 {font-size:10pt; line-height: 14pt;}
+</style></head>
+<body header="nlheader" header-height="0.95in" footer="nlfooter" footer-height="2.5in">
+<table align="center">
+	<tr>
+		<td align="center"><p class="brandonGrotesqueMed" text-align="center" color="#000000" align="center" padding-top="15">PICK-UP RECEIPT</p></td>
+	</tr>
+</table>
+<hr background-color="#000000" width="7.0in" />
+<table align="center" width="7.0in">
+	<tr>
+		<td style="padding-bottom: 15px;" width="2.5in" class="freightDispPro pt10">Date: ${record.trandate?string.long}</td>
+		<td style="padding-bottom: 15px;" width="2.5in" class="freightDispPro pt10">Order: ${record.tranid}</td>
+	</tr>
+	<tr>
+		<td width="2.5in" class="freightDispPro pt10">
+			<span class="brandonGrotesque pt10">${record.billaddress@label}</span><br/>
+			${record.billaddress}
+		</td>
+		<td width="2.5in" class="freightDispPro pt10">
+			<span class="brandonGrotesque pt10">${record.shipaddress@label}</span><br/>
+			${record.shipaddress}
+		</td>
+		<td width="2.0in" class="freightDispPro pt10">&nbsp;</td>
+	</tr>
+</table>
+<hr background-color="#000000" width="7.00in" />
+<table align="center" cellmargin="0" cellpadding="0" width="7.00in" height="3.00in">
+
+<!-- start items -->
+<#list fulfillment.item as item>
+	<#if item_index==0>
+		<thead>
+			<tr>
+				<td align="left" width="1.75in" class="brandonGrotesque pt10">ITEM</td>
+				<td align="left" width="3.25in" class="brandonGrotesque pt10">DESCRIPTION</td>
+				<td align="left" width="0.40in" class="brandonGrotesque pt10">&nbsp;</td>
+				<td align="right" width="0.75in" class="brandonGrotesque pt10">QUANTITY</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left">
+					<hr background-color="#000000" width="7.00in"/>
+				</td>
+			</tr>
+		</thead>
+	</#if>
+	<#if item.custcol_category != "Melee (Diamond)" && item.custcol_category != "Melee (Sapphire)" && item.custcol_category != "Melee (Other colored gemstone)" && item.custcol_category != "Service">
+	<#if !(item.description=="" && (item.item=="Resize Ring ." || item.item=="Assemble Jewelry ." || item.item=="Repair Ring ." || item.item=="Head ."))>
+		<tr padding-bottom="0.1in">
+			<td class="freightDispPro pt10" width="1.75in"><p align="left" text-align="left">${item.item}</p></td>
+			<td align="left" class="freightDispPro pt10" width="3.25in"><p align="left" text-align="left">${item.description}</p></td>
+			<td align="left" class="freightDispPro pt10" width="0.40in">&nbsp;</td>
+			<td align="right" class="freightDispPro pt10" width="0.75in">${item.quantity}</td>
+		</tr>
+	</#if></#if>
+</#list>
+<!-- end items -->
+
+</table>
+	
+</body>
+</pdf>

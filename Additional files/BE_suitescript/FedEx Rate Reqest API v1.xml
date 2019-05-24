@@ -1,0 +1,76 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v22="http://fedex.com/ws/rate/v22">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v22:RateRequest>
+		
+			<v22:WebAuthenticationDetail>
+				<v22:UserCredential>
+					<v22:Key>3AEDIaHZdh8iz0kz</v22:Key>
+					<v22:Password>pwYWcMakqktbbD5xcsw67pinm</v22:Password>
+				</v22:UserCredential>
+			</v22:WebAuthenticationDetail>
+			
+			<v22:ClientDetail>
+				<v22:AccountNumber>336188067</v22:AccountNumber>
+				<v22:MeterNumber>109944986</v22:MeterNumber>
+			</v22:ClientDetail>
+			
+			<v22:TransactionDetail>
+				<v22:CustomerTransactionId>RateRequest_Basic</v22:CustomerTransactionId>
+			</v22:TransactionDetail>
+			
+			<v22:Version>
+				<v22:ServiceId>crs</v22:ServiceId>
+				<v22:Major>22</v22:Major>
+				<v22:Intermediate>0</v22:Intermediate>
+				<v22:Minor>0</v22:Minor>
+			</v22:Version>
+			
+			<v22:RequestedShipment>
+			
+				<v22:DropoffType>REGULAR_PICKUP</v22:DropoffType>
+				<v22:ServiceType>{{service_type}}</v22:ServiceType>
+				<v22:PackagingType>YOUR_PACKAGING</v22:PackagingType>
+					
+				<v22:Shipper>
+					<v22:Contact>
+						<v22:CompanyName>Brilliant Earth</v22:CompanyName>
+						<v22:PhoneNumber>4153668036</v22:PhoneNumber>
+						<v22:EMailAddress>opsshipping@brilliantearth.com</v22:EMailAddress>
+					</v22:Contact>
+					<v22:Address>
+						<v22:StreetLines>{{ship_from_address_1}}</v22:StreetLines>
+						<v22:StreetLines>{{ship_from_address_2}}</v22:StreetLines>
+						<v22:City>{{ship_from_city}}</v22:City>
+						<v22:StateOrProvinceCode>{{ship_from_state}}</v22:StateOrProvinceCode>
+						<v22:PostalCode>{{ship_from_zipcode}}</v22:PostalCode>
+						<v22:CountryCode>{{ship_from_country}}</v22:CountryCode>
+					</v22:Address>
+				</v22:Shipper>
+					
+				<v22:Recipient>
+					<v22:Address>
+						<v22:StreetLines>{{ship_to_address_1}}</v22:StreetLines>
+						<v22:StreetLines>{{ship_to_address_2}}</v22:StreetLines>
+						<v22:City>{{ship_to_city}}</v22:City>
+						<v22:StateOrProvinceCode>{{ship_to_state}}</v22:StateOrProvinceCode>
+						<v22:PostalCode>{{ship_to_zipcode}}</v22:PostalCode>
+						<v22:CountryCode>{{ship_to_country}}</v22:CountryCode>
+					</v22:Address>
+				</v22:Recipient>
+					
+				<v22:PackageCount>1</v22:PackageCount>
+				
+				<v22:RequestedPackageLineItems>
+					<v22:GroupPackageCount>1</v22:GroupPackageCount>
+					<v22:Weight>
+						<v22:Units>LB</v22:Units>
+						<v22:Value>{{weight}}</v22:Value>
+					</v22:Weight>
+					
+				</v22:RequestedPackageLineItems>
+				
+			</v22:RequestedShipment>
+		</v22:RateRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

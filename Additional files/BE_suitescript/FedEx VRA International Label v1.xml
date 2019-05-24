@@ -1,0 +1,226 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v19="http://fedex.com/ws/ship/v19">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v19:ProcessShipmentRequest>
+		
+			<v19:WebAuthenticationDetail>
+				<v19:UserCredential>
+					<v19:Key>{{key}}</v19:Key>
+					<v19:Password>{{password}}</v19:Password>
+				</v19:UserCredential>
+			</v19:WebAuthenticationDetail>
+			
+			<v19:ClientDetail>
+				<v19:AccountNumber>{{accountnumber}}</v19:AccountNumber>
+				<v19:MeterNumber>{{meternumber}}</v19:MeterNumber>
+			</v19:ClientDetail>
+			
+			<v19:TransactionDetail>
+				<v19:CustomerTransactionId>ProcessShip_Basic</v19:CustomerTransactionId>
+			</v19:TransactionDetail>
+			
+			<v19:Version>
+				<v19:ServiceId>ship</v19:ServiceId>
+				<v19:Major>19</v19:Major>
+				<v19:Intermediate>0</v19:Intermediate>
+				<v19:Minor>0</v19:Minor>
+			</v19:Version>
+			
+			<v19:RequestedShipment>
+			
+				<v19:ShipTimestamp>{{ship_timestamp}}</v19:ShipTimestamp>
+				<v19:DropoffType>REGULAR_PICKUP</v19:DropoffType>
+				<v19:ServiceType>{{service_type}}</v19:ServiceType>
+				<v19:PackagingType>FEDEX_BOX</v19:PackagingType>
+					
+				<v19:Shipper>
+					<v19:Tins>
+						<v19:TinType>BUSINESS_NATIONAL</v19:TinType>
+						<v19:Number>{{ein}}</v19:Number>
+					</v19:Tins>
+					<v19:Contact>
+						<v19:CompanyName>Brilliant Earth</v19:CompanyName>
+						<v19:PhoneNumber>{{ship_from_phone}}</v19:PhoneNumber>
+					</v19:Contact>
+					<v19:Address>
+						<v19:StreetLines>{{ship_from_address1}}</v19:StreetLines>
+						<v19:StreetLines>{{ship_from_address2}}</v19:StreetLines>
+						<v19:City>{{ship_from_city}}</v19:City>
+						<v19:StateOrProvinceCode>{{ship_from_state}}</v19:StateOrProvinceCode>
+						<v19:PostalCode>{{ship_from_zipcode}}</v19:PostalCode>
+						<v19:CountryCode>{{ship_from_country}}</v19:CountryCode>
+					</v19:Address>
+				</v19:Shipper>
+					
+				<v19:Recipient>
+					<v19:Contact>
+					{{#if ship_attention}}
+						<v19:PersonName>{{ship_attention}}</v19:PersonName>
+					{{/if}}
+						<v19:CompanyName>{{ship_addressee}}</v19:CompanyName>
+						<v19:PhoneNumber>{{ship_phone}}</v19:PhoneNumber>
+					</v19:Contact>
+					<v19:Address>
+						<v19:StreetLines>{{ship_address1}}</v19:StreetLines>
+						<v19:StreetLines>{{ship_address2}}</v19:StreetLines>
+						<v19:City>{{ship_city}}</v19:City>
+						<v19:StateOrProvinceCode>{{ship_state}}</v19:StateOrProvinceCode>
+						<v19:PostalCode>{{ship_zipcode}}</v19:PostalCode>
+						<v19:CountryCode>{{ship_country}}</v19:CountryCode>
+					</v19:Address>
+				</v19:Recipient>
+					
+				<v19:ShippingChargesPayment>
+					<v19:PaymentType>SENDER</v19:PaymentType>
+					<v19:Payor>
+						<v19:ResponsibleParty>
+							<v19:AccountNumber>{{accountnumber}}</v19:AccountNumber>
+							<v19:Contact/>
+						</v19:ResponsibleParty>
+					</v19:Payor>
+				</v19:ShippingChargesPayment>
+				
+				{{#if allowETD}}
+				<v19:SpecialServicesRequested>
+					<v19:SpecialServiceTypes>ELECTRONIC_TRADE_DOCUMENTS</v19:SpecialServiceTypes>
+					<v19:EtdDetail>
+						<v19:RequestedDocumentCopies>COMMERCIAL_INVOICE</v19:RequestedDocumentCopies>
+					</v19:EtdDetail>
+				</v19:SpecialServicesRequested>
+				{{/if}}
+				
+				<v19:CustomsClearanceDetail>
+					{{#if use_be_importer}}
+					<v19:ImporterOfRecord>
+						<v19:AccountNumber>336188067</v19:AccountNumber>
+						<v19:Contact>
+							<v19:CompanyName>Brilliant Earth</v19:CompanyName>
+							<v19:PhoneNumber>4153668036</v19:PhoneNumber>
+						</v19:Contact>
+						<v19:Address>
+							<v19:StreetLines>26 O'Farrell St.</v19:StreetLines>
+							<v19:StreetLines>Floor 10</v19:StreetLines>
+							<v19:City>San Francisco</v19:City>
+							<v19:StateOrProvinceCode>CA</v19:StateOrProvinceCode>
+							<v19:PostalCode>94108</v19:PostalCode>
+							<v19:CountryCode>US</v19:CountryCode>
+						</v19:Address>
+					</v19:ImporterOfRecord>
+					{{/if}}
+					<v19:DutiesPayment>
+						{{#if bill_dtf}}
+							<v19:PaymentType>RECIPIENT</v19:PaymentType>
+						{{else}}
+							<v19:PaymentType>THIRD_PARTY</v19:PaymentType>
+							<v19:Payor>
+							  <v19:ResponsibleParty>
+								<v19:AccountNumber>194375506</v19:AccountNumber>
+								<v19:Contact/>
+							  </v19:ResponsibleParty>
+							</v19:Payor>
+						{{/if}}
+					</v19:DutiesPayment>
+					<v19:DocumentContent>NON_DOCUMENTS</v19:DocumentContent>
+					<v19:CustomsValue>
+						<v19:Currency>{{currency}}</v19:Currency>
+						<v19:Amount>{{customs_value}}</v19:Amount>
+					</v19:CustomsValue>
+					<v19:CommercialInvoice>
+						<v19:Purpose>{{purpose_of_shipment}}</v19:Purpose>
+						<v19:CustomerReferences>
+							<v19:CustomerReferenceType>INVOICE_NUMBER</v19:CustomerReferenceType>
+							<v19:Value>{{tranid}}</v19:Value>
+						</v19:CustomerReferences>
+						<v19:TermsOfSale>{{terms_of_sale}}</v19:TermsOfSale>
+					</v19:CommercialInvoice>
+					{{#each items}}
+						<v19:Commodities>
+							<v19:NumberOfPieces>1</v19:NumberOfPieces>
+							<v19:Description>{{description}}</v19:Description>
+							<v19:CountryOfManufacture>{{com}}</v19:CountryOfManufacture>
+							<v19:HarmonizedCode>{{code}}</v19:HarmonizedCode>
+							<v19:Weight>
+								<v19:Units>LB</v19:Units>
+								<v19:Value>0.00</v19:Value>
+							</v19:Weight>
+							<v19:Quantity>{{qty}}</v19:Quantity>
+							<v19:QuantityUnits>1</v19:QuantityUnits>
+							<v19:UnitPrice>
+								<v19:Currency>{{currency}}</v19:Currency>
+								<v19:Amount>{{rate}}</v19:Amount>
+							</v19:UnitPrice>
+							<v19:CustomsValue>
+								<v19:Currency>{{currency}}</v19:Currency>
+								<v19:Amount>{{amount}}</v19:Amount>
+							</v19:CustomsValue>
+						</v19:Commodities>
+					{{/each}}
+					<v19:ExportDetail>
+						<v19:ExportComplianceStatement>{{eei}}</v19:ExportComplianceStatement>
+					</v19:ExportDetail>
+				</v19:CustomsClearanceDetail>
+					
+				<v19:LabelSpecification>
+					<v19:LabelFormatType>COMMON2D</v19:LabelFormatType>
+					<v19:ImageType>PNG</v19:ImageType>
+					<v19:LabelStockType>PAPER_4X6</v19:LabelStockType>
+					<v19:CustomerSpecifiedDetail>
+						<v19:MaskedData>CUSTOMS_VALUE</v19:MaskedData>
+						<v19:MaskedData>DUTIES_AND_TAXES_PAYOR_ACCOUNT_NUMBER</v19:MaskedData>
+						<v19:MaskedData>SHIPPER_ACCOUNT_NUMBER</v19:MaskedData>
+						<v19:MaskedData>TRANSPORTATION_CHARGES_PAYOR_ACCOUNT_NUMBER</v19:MaskedData>
+					</v19:CustomerSpecifiedDetail>
+				</v19:LabelSpecification>
+				
+				<v19:ShippingDocumentSpecification>
+					<v19:ShippingDocumentTypes>COMMERCIAL_INVOICE</v19:ShippingDocumentTypes>
+					<v19:CommercialInvoiceDetail>
+						<v19:Format>
+							<v19:ImageType>PDF</v19:ImageType>
+							<v19:StockType>PAPER_LETTER</v19:StockType>
+						</v19:Format>
+						<v19:CustomerImageUsages>
+						  <v19:Type>LETTER_HEAD</v19:Type>
+						  <v19:Id>IMAGE_1</v19:Id>
+						</v19:CustomerImageUsages>
+						<v19:CustomerImageUsages>
+						  <v19:Type>SIGNATURE</v19:Type>
+						  <v19:Id>IMAGE_2</v19:Id>
+						</v19:CustomerImageUsages>
+					</v19:CommercialInvoiceDetail>
+				</v19:ShippingDocumentSpecification>
+					
+				<v19:PackageCount>1</v19:PackageCount>
+				
+				<v19:RequestedPackageLineItems>
+					<v19:SequenceNumber>1</v19:SequenceNumber>
+					<v19:InsuredValue>
+						<v19:Currency>{{currency}}</v19:Currency>
+						<v19:Amount>{{insurance_value}}</v19:Amount>
+					</v19:InsuredValue>
+					<v19:Weight>
+						<v19:Units>LB</v19:Units>
+						<v19:Value>2</v19:Value>
+					</v19:Weight>
+					<v19:CustomerReferences>
+						<v19:CustomerReferenceType>CUSTOMER_REFERENCE</v19:CustomerReferenceType>
+						<v19:Value>{{insurance_label}}</v19:Value>
+					</v19:CustomerReferences>
+					<v19:CustomerReferences>
+						<v19:CustomerReferenceType>INVOICE_NUMBER</v19:CustomerReferenceType>
+						<v19:Value>{{tranid}}</v19:Value>
+					</v19:CustomerReferences>
+					
+					<v19:SpecialServicesRequested>
+						<v19:SpecialServiceTypes>SIGNATURE_OPTION</v19:SpecialServiceTypes>
+						<v19:SignatureOptionDetail>
+							<v19:OptionType>DIRECT</v19:OptionType>
+						</v19:SignatureOptionDetail>
+					</v19:SpecialServicesRequested>
+					
+				</v19:RequestedPackageLineItems>
+				
+			</v19:RequestedShipment>
+		</v19:ProcessShipmentRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

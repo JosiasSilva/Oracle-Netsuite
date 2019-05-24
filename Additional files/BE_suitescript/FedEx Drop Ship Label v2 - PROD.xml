@@ -1,0 +1,124 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v19="http://fedex.com/ws/ship/v19">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<v19:ProcessShipmentRequest>
+		
+			<v19:WebAuthenticationDetail>
+				<v19:UserCredential>
+					<v19:Key>3AEDIaHZdh8iz0kz</v19:Key>
+					<v19:Password>pwYWcMakqktbbD5xcsw67pinm</v19:Password>
+				</v19:UserCredential>
+			</v19:WebAuthenticationDetail>
+			
+			<v19:ClientDetail>
+				<v19:AccountNumber>336188067</v19:AccountNumber>
+				<v19:MeterNumber>109944986</v19:MeterNumber>
+			</v19:ClientDetail>
+			
+			<v19:TransactionDetail>
+				<v19:CustomerTransactionId>ProcessShip_Basic</v19:CustomerTransactionId>
+			</v19:TransactionDetail>
+			
+			<v19:Version>
+				<v19:ServiceId>ship</v19:ServiceId>
+				<v19:Major>19</v19:Major>
+				<v19:Intermediate>0</v19:Intermediate>
+				<v19:Minor>0</v19:Minor>
+			</v19:Version>
+			
+			<v19:RequestedShipment>
+			
+				<v19:ShipTimestamp>{{ship_timestamp}}</v19:ShipTimestamp>
+				<v19:DropoffType>REGULAR_PICKUP</v19:DropoffType>
+				<v19:ServiceType>{{service_type}}</v19:ServiceType>
+				<v19:PackagingType>YOUR_PACKAGING</v19:PackagingType>
+					
+				<v19:Shipper>
+					<v19:Contact>
+						<v19:CompanyName>{{ship_from_addressee}}</v19:CompanyName>
+						<v19:PhoneNumber>{{ship_from_phone}}</v19:PhoneNumber>
+					</v19:Contact>
+					<v19:Address>
+						<v19:StreetLines>{{ship_from_address1}}</v19:StreetLines>
+						<v19:StreetLines>{{ship_from_address2}}</v19:StreetLines>
+						<v19:City>{{ship_from_city}}</v19:City>
+						<v19:StateOrProvinceCode>{{ship_from_state}}</v19:StateOrProvinceCode>
+						<v19:PostalCode>{{ship_from_zipcode}}</v19:PostalCode>
+						<v19:CountryCode>{{ship_from_country}}</v19:CountryCode>
+					</v19:Address>
+				</v19:Shipper>
+					
+				<v19:Recipient>
+					<v19:Contact>
+						{{#if ship_attention}}
+							<v19:PersonName>{{ship_attention}}</v19:PersonName>
+						{{/if}}
+						<v19:CompanyName>{{ship_addressee}}</v19:CompanyName>
+						<v19:PhoneNumber>{{ship_phone}}</v19:PhoneNumber>
+					</v19:Contact>
+					<v19:Address>
+						<v19:StreetLines>{{ship_address1}}</v19:StreetLines>
+						<v19:StreetLines>{{ship_address2}}</v19:StreetLines>
+						<v19:City>{{ship_city}}</v19:City>
+						<v19:StateOrProvinceCode>{{ship_state}}</v19:StateOrProvinceCode>
+						<v19:PostalCode>{{ship_zipcode}}</v19:PostalCode>
+						<v19:CountryCode>{{ship_country}}</v19:CountryCode>
+					</v19:Address>
+				</v19:Recipient>
+					
+				<v19:ShippingChargesPayment>
+					<v19:PaymentType>SENDER</v19:PaymentType>
+					<v19:Payor>
+						<v19:ResponsibleParty>
+							<v19:AccountNumber>336188067</v19:AccountNumber>
+							<v19:Contact/>
+						</v19:ResponsibleParty>
+					</v19:Payor>
+				</v19:ShippingChargesPayment>
+				
+				{{#if saturday_delivery}}
+				<v19:SpecialServicesRequested>
+					<v19:SpecialServiceTypes>SATURDAY_DELIVERY</v19:SpecialServiceTypes>
+				</v19:SpecialServicesRequested>
+				{{/if}}
+					
+				<v19:LabelSpecification>
+					<v19:LabelFormatType>COMMON2D</v19:LabelFormatType>
+					<v19:ImageType>PNG</v19:ImageType>
+					<v19:LabelStockType>PAPER_4X6</v19:LabelStockType>
+				</v19:LabelSpecification>
+					
+				<v19:PackageCount>1</v19:PackageCount>
+				
+				<v19:RequestedPackageLineItems>
+					<v19:SequenceNumber>1</v19:SequenceNumber>
+					<v19:InsuredValue>
+						<v19:Currency>USD</v19:Currency>
+						<v19:Amount>{{insurance_value}}</v19:Amount>
+					</v19:InsuredValue>
+					<v19:Weight>
+						<v19:Units>LB</v19:Units>
+						<v19:Value>2</v19:Value>
+					</v19:Weight>
+					<v19:CustomerReferences>
+						<v19:CustomerReferenceType>CUSTOMER_REFERENCE</v19:CustomerReferenceType>
+						<v19:Value>{{insurance_label}}</v19:Value>
+					</v19:CustomerReferences>
+					<v19:CustomerReferences>
+						<v19:CustomerReferenceType>INVOICE_NUMBER</v19:CustomerReferenceType>
+						<v19:Value>{{tranid}}</v19:Value>
+					</v19:CustomerReferences>
+					
+					<v19:SpecialServicesRequested>
+						<v19:SpecialServiceTypes>SIGNATURE_OPTION</v19:SpecialServiceTypes>
+						<v19:SignatureOptionDetail>
+							<v19:OptionType>DIRECT</v19:OptionType>
+						</v19:SignatureOptionDetail>
+					</v19:SpecialServicesRequested>
+					
+				</v19:RequestedPackageLineItems>
+				
+			</v19:RequestedShipment>
+		</v19:ProcessShipmentRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

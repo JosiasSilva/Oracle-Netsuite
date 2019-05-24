@@ -1,0 +1,62 @@
+
+ function CreateAppointment()
+ {
+     alert('CreateAppointment');
+     var clientToken = '';
+     var accountId = '';
+
+     var user = 'aaguilar@brilliantearth.com';
+     var pass = 'b11485f945288e617bc193b11de82d0a';         
+     $.ajax({
+         type: "POST",  
+         dataType: 'json',
+         crossDomain: true,
+         //contentType : 'application/json; charset=UTF-8',
+         url: "http://www.setster.com/api/v2/account/authenticate",  
+         data: 'email='+user+'&token='+pass,  
+         success: function(response) {   
+             clientToken = response.data.session_token;   
+             accountId = response.data.user.company_id;  
+             insertEvent();   
+         }
+     });
+
+function insertEvent() {
+         var dataToSend = {
+             "client_name"   :   "Test Customer",
+             "client_email"  :   "test_customer@inoday.com",
+             "location_id"   :   20611,
+             "service_id"    :   38158,
+             "subservices"   :   "",
+             "employee_id"   :   0,
+             "start_date"    :   "2015-05-15 12:00:00",
+             "note"          :   "This is a test."
+         };    
+            
+         $.ajax({
+             type: "POST",
+             url: "http://www.setster.com/api/v2/appointment/?session_token="+clientToken,
+             data: {data: JSON.stringify(dataToSend) },
+             //dataType: 'jsonp',
+             //crossDomain: true,
+             success: function(msg) {
+                 if(msg.statusCode === 0){  
+                     alert('ok');
+                 } else {
+                     alert('failure');
+                 }
+             },
+             error: function(jqXHR) {
+                 var msg = {};
+                 try {
+                     msg = $.parseJSON(jqXHR.responseText);
+                 } catch(e) {
+                     msg = {};
+                 }
+                 console.log(msg);
+             },
+             complete: function() {
+             }
+         });
+     }
+ }
